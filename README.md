@@ -439,6 +439,6 @@ The main question was to obtain the most popular names from this dataset. By onl
 
 On other hand, this project enhanced my SQL abilities and my thought process. I was able to narrow down the questions (and also the number of queries) in order to find the specific answer. 
 
-Throughout the exploration of this dataset many other questions emerged. For example, the total sum of the most popular names of every ethnicity is only **15731** out of a grand total of **606104**. That is like 5% of the total. What happens with the rest? Or Which ethnicity has more unique names?
+Throughout the exploration of this dataset many other questions emerged. For example, the total sum of the most popular names of every ethnicity is only **15731** out of a grand total of **606104**. That is like 5% of the total. What happens with the rest? Or with that many names left which ethnicity has more unique names? Many questions that might or might not be relevant to answer my main question or maybe it can provide more evidence supporting it.
  
-This project help me understand how important is keep in mind the question I want to answer and, also, to keep noted all the other questions that will appear throughout the analysis.
+This project helped me understand how important is keep in mind the question I want to answer and, also, to keep noted all the other questions that will appear throughout the analysis. Because it can reveal new windows that will reveal new perspective.
