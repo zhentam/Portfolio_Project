@@ -49,37 +49,84 @@ SET ethnicity = LOWER(ethnicity);
 
 - **Update gender column**: Similar as the previous columns, for clarity and easier query writing, I set it on lower case.
 
-Insertar query
+```
+UPDATE baby_names
+SET gender = LOWER(gender)
+```
+
 
 - **Duplicate values from 2011 to 2014**: Maybe there was a problem with the dataset, maybe it is supposed to have those values, maybe…maybe…maybe. Because I do not have the reasoning behind this, I have decided to do my analysis just considering the unique values. I am not updating the table, instead I will be using CTEs in my queries.
 
-Insertar query 
 
 
-Analysis
+## Analysis
 
-1.	Total children names by gender and ethnicity
+### 1.	Total children names by gender and ethnicity
 
 This won’t be my main question to answer, but I believe it is fundamental to have a general understanding of the dataset. This information is an introduction to the dataset so you, the reader, can have a broad view.
 
 The first thing to know is how many babies were names according to this dataset.
 
-Inserter query de total names
+```
+WITH non_duplicate_names AS (
+    SELECT DISTINCT *
+    FROM baby_names
+)
+SELECT
+    SUM(count) AS total_names
+FROM
+    non_duplicate_names
+```
+
+
 
 This query shows there were 606.104 babies born in the City of New York from 2011 to 2019.
 
-To have a general impression of this dataset, I decided to see total names considering gender and its corresponding percentage.
+I can go a little further and see total names considering gender and its corresponding percentage.
 
-Insertar Query total gender
+```
+WITH non_duplicate_names AS (
+    SELECT DISTINCT *
+    FROM baby_names
+)
+SELECT
+    gender,
+    SUM(count) AS total_names,
+    ROUND(SUM(count) * 100.0 / (SELECT SUM(count) FROM non_duplicate_names), 2) AS percentage
+FROM
+    non_duplicate_names
+GROUP BY
+    gender
+ORDER BY
+    total_names DESC;
+```
+
 
 A total of 339.862 male babies were born which represents 56% and 266.242 female babies were born which represent almost 44% of total through 2011 to 2019.
 
 Now let’s see how many babies were born by each ethnicity.
 
-Inserter query query total eth
+```
+WITH non_duplicate_names AS(
+    SELECT DISTINCT *
+    FROM baby_names
+        baby_names
+)
+SELECT
+    ethnicity,
+    SUM(count) as total_names,
+    ROUND(SUM(count) * 100.0 / (SELECT SUM(count) FROM non_duplicate_names), 2) AS percentage
+FROM
+    non_duplicate_names
+GROUP BY
+    ethnicity
+ORDER BY
+    total_names DESC;
+```
 
-This query shows that White non Hispanic ethnicity represents 39,95% (242.137) and Hispanic ethnicity represents almost 32,63% (197.749) and both together combined are approximately 73% of the babies’ name.
-On the other hand, Black non Hispanic ethnicity contributes 13,89% (84.173) and Asian and Pacific Islander 13,54% (82.045) and both combined  38% of the names. I grouped them in these two groups because their percentage are similar and we can see that White non Hispanic and Hispanic are the ethnicities with the most babies born.
+
+This query shows that **White non Hispanic** ethnicity represents **39,95% (242.137)** and **Hispanic** ethnicity represents almost **32,63% (197.749)** and both together combined are approximately **73%** of the babies’ name.
+On the other hand, **Black non Hispanic** ethnicity contributes **13,89% (84.173)** and **Asian and Pacific Islander 13,54% (82.045)** and both ==combined==  38% of the names. I grouped them in these two groups because their percentage are similar and we can see that White non Hispanic and Hispanic are the ethnicities with the most babies born.
 It is important to have this in mind, so these latter ethnicities do not get under represented.
 
 Finally, we can combine gender and ethnicity to grasp better this trend.
